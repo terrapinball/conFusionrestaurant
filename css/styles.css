@@ -52,3 +52,10 @@ body {
 .card-colorr {
     background-color: rgb(98, 55, 199);
 }
+
+.tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}

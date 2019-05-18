@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Breadcrumb, BreadcrumbItem, Button, Row, Label, Col,  } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Row, Label, Col,  } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
@@ -89,8 +89,6 @@ class Contact extends Component {
 
     render() {
 
-        const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
-
         return(
             <div className="container">
                 <div className="row">
@@ -150,7 +148,7 @@ class Contact extends Component {
                                         model=".firstname"
                                         show="touched"
                                         messages={{
-                                            required: 'Required',
+                                            required: 'Required ',
                                             minLength: 'Must be greater than 2 characters',
                                             maxLength: 'Must be 15 characters or less'
                                         }}
@@ -172,7 +170,7 @@ class Contact extends Component {
                                         model=".lastname"
                                         show="touched"
                                         messages={{
-                                            required: 'Required',
+                                            required: 'Required ',
                                             minLength: 'Must be greater than 2 characters',
                                             maxLength: 'Must be 15 characters or less'
                                         }}
@@ -194,7 +192,7 @@ class Contact extends Component {
                                         model=".telnum"
                                         show="touched"
                                         messages={{
-                                            required: 'Required',
+                                            required: 'Required ',
                                             minLength: 'Must be greater than 2 numbers',
                                             maxLength: 'Must be 15 numbers or less',
                                             isNumber: 'Must be a number'
@@ -217,7 +215,7 @@ class Contact extends Component {
                                         model=".email"
                                         show="touched"
                                         messages={{
-                                            required: 'Required',
+                                            required: 'Required ',
                                             validEmail: 'Invalid Email Address'
                                         }}
                                     />

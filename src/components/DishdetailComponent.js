@@ -1,8 +1,100 @@
-import React from 'react';
-import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import React, { Component } from 'react';
+import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem, 
+    Row, Label, Button, Modal, ModalHeader, ModalBody, Col} from 'reactstrap';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+const isNumber = (val) => !isNaN(Number(val));
 
+class CommentForm extends Component {
+
+    constructor(props) {
+        super(props);
+            this.state = {
+                isNavOpen: false,
+                isModalOpen: false
+            };
+
+            this.toggleModal = this.toggleModal.bind(this);
+    }
+
+    toggleNav() {
+        this.setState({
+            isNavOpen: !this.state.isNavOpen
+        });
+    }
+
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+
+    handleComment(event) {
+        this.toggleModal();
+        alert("Thanks " + this.yourname.value + " !");
+        event.preventDefault();
+    }
+
+    render() {
+        return (
+            <div>
+                <Button onClick={this.toggleModal}><span className="fa fa-pencil"></span>Submit Comment</Button>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Comment</ModalHeader>
+                        <ModalBody>
+                            <LocalForm onSubmit={this.handleLogin}>
+                                <Row className="form-group ">
+                                    <Col md={10}>
+                                        <Label htmlFor="rating">Rating</Label>
+                                        <Control.select model=".rating" id="rating" name="rating" className="form-control">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </Control.select>
+                                    </Col>    
+                                </Row>
+                                <Row className="form-group">
+                                    <Col md={10}>    
+                                        <Label htmlFor="yourname">Your Name</Label>
+                                        <Control.text model=".yourname" id="yourname" name="yourname" 
+                                            className="form-control"
+                                            validators={{
+                                                required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+                                            }}
+                                          />
+                                        <Errors
+                                            className="text-danger"
+                                            model=".yourname"
+                                            show="touched"
+                                            messages={{
+                                                required: 'Required: ',
+                                                minLength: 'Must be greater than 3 characters',
+                                                maxLength: 'Must be 15 characters or less'
+                                            }}
+                                    />
+                                    </Col>
+                                </Row>
+                                <Row className="form-group">
+                                    <Col md={10}>
+                                        <Label htmlFor="comment">Comment</Label>
+                                            <Control.textarea model=".comment" id="comment" name="comment" className="form-control" rows="6"
+                                            />
+                                    </Col>
+                                </Row>
+                                <Button type="submit" value="submit" color="primary">Submit</Button>
+                            </LocalForm>
+                        </ModalBody>
+                </Modal>  
+            </div>
+        )
+    }
+}
 
     const DishDetail = (props) => {
         if (props.dish != null)
@@ -45,34 +137,36 @@ import { Link } from 'react-router-dom';
         )
     }
 
-    function RenderComments({comments}) {
-        console.log('comments', comments);
+     const RenderComments = ({comments}) => {
+        
         if (comments != null) {
             return (
                 <div class="col-12 col-md-5 m-1" >
                     <h4>Comments</h4>
-
-                    <ul>
-                    {comments.map((comment) => 
-                        <div className="list-unstyled" key={comment.id}>
-                            <li>{comment.comment}</li>
-                            <li>--{comment.author} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}</li>
-                            <br></br>
-                            
-                        </div>    
-                    )}
-                    </ul>
-
-                    
+                        <ul>
+                        {comments.map((comment) => 
+                            <div className="list-unstyled" key={comment.id}>
+                                <li>{comment.comment}</li>
+                                <li>--{comment.author} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}</li>
+                                <br></br>
+                                
+                            </div>
+                        )}
+                        </ul>
+                    <CommentForm />
+                      
                 </div>
+
             );
         }
+    
         else
             return (
                 <div>
                 </div>
             )
     }
+
 
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Loading } from '../redux/LoadingComponent';
+import { Loading } from './LoadingComponent';
 
     function RenderMenuItem({ dish }) {
         return(

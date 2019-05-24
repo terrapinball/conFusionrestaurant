@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Breadcrumb, BreadcrumbItem, Row, Label, Col,  } from 'reactstrap';
-import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Breadcrumb, BreadcrumbItem, Row, Label, Col, Button  } from 'reactstrap';
+import { Control, Form, Errors, /*action*/ } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
 
@@ -48,6 +48,7 @@ class Contact extends Component {
     handleSubmit(values) {
         console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
+        this.props.resetFeedbackForm();
         // event.preventDefault();
     }
 
@@ -132,7 +133,7 @@ class Contact extends Component {
                         <h3>Send Us Your Feedback</h3>
                     </div>
                     <div className="col-12 col-md-9">
-                    <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                    <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
                         <Row className="form-group">
                             <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
@@ -221,7 +222,41 @@ class Contact extends Component {
                                     />
                                 </Col>
                             </Row>
-                    </LocalForm>   
+                            <Row className="form-group">
+                                <Col md={{size: 6, offset: 2}}>
+                                    <div className="form-check">
+                                        <Label check>
+                                            <Control.checkbox model=".agree" name="agree"
+                                                className="form-check-input"
+                                                 /> {' '}
+                                                <strong>May we contact you?</strong>
+                                        </Label>
+                                    </div>
+                                </Col>
+                                <Col md={{size: 3, offset: 1}}>
+                                    <Control.select model=".contactType" name="contactType"
+                                        className="form-control">
+                                        <option>Tel.</option>
+                                        <option>Email</option>
+                                    </Control.select>
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Label htmlFor="message" md={2}>Your Feedback</Label>
+                                <Col md={10}>
+                                    <Control.textarea model=".message" id="message" name="message"
+                                        rows="12"
+                                        className="form-control" />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={{size:10, offset: 2}}>
+                                    <Button type="submit" color="primary">
+                                    Send Feedback
+                                    </Button>
+                                </Col>
+                            </Row>
+                    </Form>   
                     </div>
                 </div>
             </div>

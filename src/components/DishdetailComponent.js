@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
-const isNumber = (val) => !isNaN(Number(val));
+// const isNumber = (val) => !isNaN(Number(val));
 
 class CommentForm extends Component {
 
@@ -19,6 +19,7 @@ class CommentForm extends Component {
             };
 
             this.toggleModal = this.toggleModal.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     toggleNav() {
@@ -33,9 +34,14 @@ class CommentForm extends Component {
         });
     }
 
+    handleSubmit(values) {
+        this.toggleModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)
+    }
+
     handleComment(event) {
         this.toggleModal();
-        alert("Thanks " + this.yourname.value + " !");
+        alert("Thanks " + this.author.value + " !");
         event.preventDefault();
     }
 
@@ -46,7 +52,7 @@ class CommentForm extends Component {
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Comment</ModalHeader>
                         <ModalBody>
-                            <LocalForm onSubmit={this.handleLogin}>
+                            <LocalForm onSubmit={this.handleSubmit} onSubmitFailed={(error) => console.log({error})} >
                                 <Row className="form-group ">
                                     <Col md={10}>
                                         <Label htmlFor="rating">Rating</Label>
@@ -61,16 +67,16 @@ class CommentForm extends Component {
                                 </Row>
                                 <Row className="form-group">
                                     <Col md={10}>    
-                                        <Label htmlFor="yourname">Your Name</Label>
-                                        <Control.text model=".yourname" id="yourname" name="yourname" 
+                                        <Label htmlFor="author">Your Name</Label>
+                                        <Control.text model=".author" id="author" name="author" 
                                             className="form-control"
                                             validators={{
-                                                required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+                                                required, minLength: minLength(3), maxLength: maxLength(15)
                                             }}
                                           />
                                         <Errors
                                             className="text-danger"
-                                            model=".yourname"
+                                            model=".author"
                                             show="touched"
                                             messages={{
                                                 required: 'Required: ',
@@ -99,7 +105,7 @@ class CommentForm extends Component {
     const DishDetail = (props) => {
         if (props.dish != null)
             return (
-                <div class="container">
+                <div className="container">
                     <div className="row">
                         <Breadcrumb>
                             <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
@@ -112,7 +118,10 @@ class CommentForm extends Component {
                     </div>
                     <div className="row">
                         <RenderDish dish = {props.dish} />
-                        <RenderComments comments={props.comments} />
+                        <RenderComments comments={props.comments} 
+                        addComment={props.addComment}
+                        dishId={props.dish.id}
+                        />
                     </div>
                 </div>
             );
@@ -125,7 +134,7 @@ class CommentForm extends Component {
 
     function RenderDish({dish}) {
         return (
-            <div class="col-12 col-md-5 m-1" >
+            <div className="col-12 col-md-5 m-1" >
                 <Card>
                     <CardImg top src={dish.image} alt={dish.name} />
                     <CardBody>
@@ -137,11 +146,11 @@ class CommentForm extends Component {
         )
     }
 
-     const RenderComments = ({comments}) => {
+     const RenderComments = ({comments, addComment, dishId}) => {
         
         if (comments != null) {
             return (
-                <div class="col-12 col-md-5 m-1" >
+                <div className="col-12 col-md-5 m-1" >
                     <h4>Comments</h4>
                         <ul>
                         {comments.map((comment) => 
@@ -153,7 +162,7 @@ class CommentForm extends Component {
                             </div>
                         )}
                         </ul>
-                    <CommentForm />
+                    <CommentForm dishId={dishId} addComment={addComment} />
                       
                 </div>
 

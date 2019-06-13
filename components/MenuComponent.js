@@ -14,13 +14,6 @@ const mapStateToProps = state => {
 
 class Menu extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            dishes: DISHES
-        };
-    }
-
     static navigationOptions = {
         title: 'Menu'
     };

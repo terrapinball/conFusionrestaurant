@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, FlatList } from 'react-native';
+import { Text, ScrollView, FlatList } from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '..shared/baseUrl';
 import { LEADERS } from '../shared/leaders';
+import { Loading } from './LoadingComponent';
 
 
 const mapStateToProps = state => {
@@ -51,24 +52,47 @@ class About extends Component {
                     subtitle={item.description}
                     leftAvatar={{ source: {uri: baseUrl + item.image}}}
                     />
-                    );
-               };
-
-          return (
-          <ScrollView>
-               <History />
-               <Card title="Corporate Leadership">
-                    <FlatList 
-                         data={this.props.leaders.leaders}
-                         renderItem={renderLeader}
-                         keyExtractor={item => item.id.toString()}
-                    />
-               </Card>
-          </ScrollView>
-  );
-
+               );
+          };
+          
+          if (this.props.leaders.isLoading) {
+               return(
+                    <ScrollView>
+                         <History />
+                         <Card 
+                              title="Corporate Leadership">
+                              <Loading />
+                         </Card>
+                    </ScrollView>
+               );
+          }     
+          else if (this.props.leaders.errMess) {
+               return(
+                    <ScrollView>
+                         <History />
+                         <Card 
+                              title="Corporate Leadership">
+                              <Text>{this.props.leaders.errMess}</Text>
+                         </Card>
+                    </ScrollView>
+               );
+          }
+          else {
+               return (
+                    <ScrollView>
+                         <History />
+                         <Card 
+                              title="Corporate Leadership">
+                         <FlatList 
+                              data={this.props.leaders.leaders}
+                              renderItem={renderLeader}
+                              keyExtractor={item => item.id.toString()}
+                         />
+                         </Card>
+                    </ScrollView>
+               );
+          }
      }
-
 }
 
 export default connect(mapStateToProps)(About);

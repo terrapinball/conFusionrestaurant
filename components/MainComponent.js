@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+import { View, Platform, Text, ScrollView, Image, StyleSheet } from 'react-native';
+import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 import Home from './HomeComponent';
 import Menu from './MenuComponent';
 import DishDetail from './DishDetailComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
-import { View, Platform, Text, ScrollView, Image, StyleSheet } from 'react-native';
-import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
-import { Icon } from 'react-native-elements';
 
 const mapStateToProps = state => {
   return {

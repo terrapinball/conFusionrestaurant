@@ -2,17 +2,22 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { baseUrl } from '..shared/baseUrl';
+import { baseUrl } from '../shared/baseUrl';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
+import { postFavorite } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
         dishes: state.dishes,
-        comments: state.comments
+        comments: state.comments,
+        favorites: state.favorites
     }
 }
 
+const mapDispatchToProps = dispatch => ({
+    postFavorite: (dishId) => dispatch(postFavorite(dishId))
+})
 
 function RenderDish(props) {
     
@@ -100,4 +105,4 @@ class DishDetail extends Component {
     }
 }
 
-export default connect(mapStateToProps)(DishDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(DishDetail);

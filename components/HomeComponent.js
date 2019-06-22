@@ -3,9 +3,6 @@ import { View, Text, Animated, Easing } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
-import { DISHES } from '../shared/dishes';
-import { PROMOTIONS } from '../shared/promotions';
-import { LEADERS } from '../shared/leaders';
 import { Loading } from './LoadingComponent';
 
 const mapStateToProps = state => {

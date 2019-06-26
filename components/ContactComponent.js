@@ -18,7 +18,7 @@ class Contact extends Component {
 
           return(
                <ScrollView>
-                    <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+                    <Animatable.View animation="fadeInDown" duration={2000} >
                          <Card title='Contact Information'>
                               <Text style={{margin: 10}}>121, Clear Water Bay Road</Text>
                               <Text style={{margin: 10}}>Clear Water Bay, Kowloon</Text>

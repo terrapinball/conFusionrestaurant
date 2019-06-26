@@ -70,7 +70,7 @@ class About extends Component {
           else if (this.props.leaders.errMess) {
                return(
                     <ScrollView>
-                         <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+                         <Animatable.View animation="fadeInDown" duration={2000} >
                               <History />
                               <Card 
                                    title="Corporate Leadership">
@@ -83,7 +83,7 @@ class About extends Component {
           else {
                return (
                     <ScrollView>
-                         <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+                         <Animatable.View animation="fadeInDown" duration={2000} >
                               <History />
                               <Card 
                                    title="Corporate Leadership">

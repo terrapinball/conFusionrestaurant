@@ -141,7 +141,7 @@ const FavoritesNavigator = createStackNavigator({
 })
 
 const LoginNavigator = createStackNavigator({
-  Login: { screen: Login }
+  Login: Login
 }, {
 navigationOptions: ({ navigation }) => ({
   headerStyle: {
@@ -150,6 +150,7 @@ navigationOptions: ({ navigation }) => ({
   headerTitleStyle: {
       color: "#fff"            
   },
+  title: 'Login',
   headerTintColor: "#fff",
   headerLeft: <Icon name="menu" size={24}
     color='white'    
